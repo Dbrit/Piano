@@ -119,10 +119,7 @@ unsigned short Horn[64] = {
   14,12,11,9,8,6,3,2,1,1,	
   0,1,1,1,2,2,3,4,4,6,7,7	
 };  	
-unsigned short Silence[32] = {
-  0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-  0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-  0,0,0,0};
+unsigned short Silence[32] = {0};
 
 
 typedef struct{
@@ -310,7 +307,9 @@ void Song_Play(void) {
     currentNote = &song[songIndex];
     Timer0A_Init(currentNote->duration);
     Timer0A_Handler();
-    while(!(GPIO_PORTF_DATA_R & 0x010)); //let run until button released
+}
+
+void Song_Stop(void) {
     disableTimer();
     Sound_Play(0,wave);
 }

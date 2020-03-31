@@ -71,7 +71,7 @@
 
 uint32_t breathe;
 
-
+int playingSong;
 
 int main(void){      
   TExaS_Init(SW_PIN_PE3210,DAC_PIN_PB3210,ScopeOn);    // bus clock at 80 MHz
@@ -79,6 +79,7 @@ int main(void){
   Sound_Init();
   // other initialization
     breathe = 0;
+    playingSong = 0;
     SYSCTL_RCGCGPIO_R |= 0x20;
     int nop = 0;
     nop++;
@@ -96,20 +97,24 @@ int main(void){
         breathe = 0;
       }
       
-      if((GPIO_PORTF_DATA_R & 0x010)) {
-        uint32_t keys = Piano_In();
-        switch(keys) {
-            case 1: EnableInterrupts(); Sound_Play(BF7, Trumpet); break;
-            case 2: EnableInterrupts(); Sound_Play(D0, Trumpet); break;
-            case 4: EnableInterrupts(); Sound_Play(F0, Trumpet); break;
-            case 8: EnableInterrupts(); Sound_Play(BF0, Trumpet); break;
-            default: DisableInterrupts(); break;
+      if((GPIO_PORTF_DATA_R & 0x010)) { // if song button not pressed
+          if(playingSong == 1) {        // if previously playing song
+              playingSong = 0;
+              Song_Stop();
+          }
+            uint32_t keys = Piano_In();
+            switch(keys) {
+                case 1: EnableInterrupts(); Sound_Play(BF7, Trumpet); break;
+                case 2: EnableInterrupts(); Sound_Play(D0, Trumpet); break;
+                case 4: EnableInterrupts(); Sound_Play(F0, Trumpet); break;
+                case 8: EnableInterrupts(); Sound_Play(BF0, Trumpet); break;
+                default: DisableInterrupts(); break;
         }
       }
-      else {
+      else if(playingSong == 0) {
+          playingSong = 1;
           EnableInterrupts();
           Song_Play();
-          DisableInterrupts();
       }
       
   }    
