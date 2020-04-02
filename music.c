@@ -86,9 +86,9 @@ void EndCritical(long sr);    // restore I bit to previous value
 void WaitForInterrupt(void);  // low power mode
 void (*PeriodicTask)(void);   // user function
 
-unsigned short wave[32] = 
+unsigned short const wave[32] = 
     {8,9,11,12,13,14,14,15,15,15,14,14,13,12,11,9,8,7,5,4,3,2,2,1,1,1,2,2,3,4,5,7};
-unsigned short Trumpet[32] = {
+unsigned short const Trumpet[32] = {
   10,11,11,12,10,8,3,1,8,15,15,	
   11,10,10,11,10,10,10,10,10,10,10,	
   10,11,11,11,11,11,11,10,10,10	
@@ -106,7 +106,7 @@ unsigned short Flute[64] = {
   2,2,1,1,1,1,0,0,0,0,	
   0,0,1,1,1,2,2,3,3,4,4,5	
 };  	
-unsigned short Guitar[32] = {  				
+unsigned short const Guitar[32] = {  				
   5,5,4,1,1,3,8,11,11,9,4,				
   2,5,11,15,13,9,7,5,5,6,8,				
   8,7,4,3,3,3,3,4,5,5				
@@ -119,13 +119,16 @@ unsigned short Horn[64] = {
   14,12,11,9,8,6,3,2,1,1,	
   0,1,1,1,2,2,3,4,4,6,7,7	
 };  	
-unsigned short Silence[32] = {0};
+unsigned short Silence[32] = 
+    {5,5,5,5,5,5,5,5,5,5,5,
+    5,5,5,5,5,5,5,5,5,
+    5,5,5,5,5,5,5,5,5,5,5,5};
 
 
 typedef struct{
     const uint32_t pitch;
     const uint32_t duration;
-    unsigned short *voice;
+    const unsigned short *voice;
 }note;
 
 uint32_t tempo = 100; //bpm
@@ -140,7 +143,7 @@ uint32_t tempo = 100; //bpm
 #define	dotQuarter	62654868
 #define gap 1061946
 
-note song[] ={      {BF7, sixteenth, Guitar}, // Ne
+const note song[] ={      {BF7, sixteenth, Guitar}, // Ne
                     {A, gap, Silence},
                     {C7, sixteenth, Guitar},  // ver
                     {A, gap, Silence},
@@ -254,7 +257,7 @@ note song[] ={      {BF7, sixteenth, Guitar}, // Ne
                     {0, whole, wave}
                    };
 
-note *currentNote;
+const note *currentNote;
 uint32_t songIndex;
             
                    
@@ -290,11 +293,7 @@ void disableTimer(void) {
 
 void Timer0A_Handler(void){
   TIMER0_ICR_R = TIMER_ICR_TATOCINT;// acknowledge timer0A timeout
-  if(currentNote->pitch == 0) {
-     Sound_Play(0,wave);
-      disableTimer();
-  }
-  else if(!(GPIO_PORTF_DATA_R & 0x010)) { //if button pressed
+  if(!(GPIO_PORTF_DATA_R & 0x010)) { //if button pressed
       Sound_Play(currentNote->pitch, currentNote->voice);
       TIMER0_TAILR_R = currentNote->duration;
       songIndex++;

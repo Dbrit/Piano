@@ -18,7 +18,7 @@
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
 
-unsigned short *currentVoice;
+const unsigned short *currentVoice;
 
 unsigned long I;
         
@@ -46,7 +46,7 @@ void Sound_Init(void){
 //           Minimum period to be determined by YOU
 //         if period equals zero, disable sound output
 // Output: none
-void Sound_Play(uint32_t period, unsigned short *voice){
+void Sound_Play(uint32_t period, const unsigned short *voice){
     if(period == 0)
         DisableInterrupts();
     else {

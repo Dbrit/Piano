@@ -72,6 +72,7 @@
 uint32_t breathe;
 
 int playingSong;
+int playingNote;
 
 int main(void){      
   TExaS_Init(SW_PIN_PE3210,DAC_PIN_PB3210,ScopeOn);    // bus clock at 80 MHz
@@ -80,6 +81,7 @@ int main(void){
   // other initialization
     breathe = 0;
     playingSong = 0;
+    playingNote = 0;
     SYSCTL_RCGCGPIO_R |= 0x20;
     int nop = 0;
     nop++;
@@ -102,14 +104,18 @@ int main(void){
               playingSong = 0;
               Song_Stop();
           }
-            uint32_t keys = Piano_In();
+          uint32_t keys = Piano_In();
+          if(!playingNote) {
             switch(keys) {
-                case 1: EnableInterrupts(); Sound_Play(BF7, Trumpet); break;
-                case 2: EnableInterrupts(); Sound_Play(D0, Trumpet); break;
-                case 4: EnableInterrupts(); Sound_Play(F0, Trumpet); break;
-                case 8: EnableInterrupts(); Sound_Play(BF0, Trumpet); break;
+                case 1: EnableInterrupts(); Sound_Play(BF7, wave); playingNote = 1; break;
+                case 2: EnableInterrupts(); Sound_Play(D0, wave); playingNote = 1; break;
+                case 4: EnableInterrupts(); Sound_Play(F0, wave); playingNote = 1; break;
+                case 8: EnableInterrupts(); Sound_Play(BF0, wave); playingNote = 1; break;
                 default: DisableInterrupts(); break;
-        }
+            }
+          }
+         else if(keys == 0)
+             playingNote = 0;
       }
       else if(playingSong == 0) {
           playingSong = 1;

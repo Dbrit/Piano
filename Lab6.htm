@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Lab6.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Lab6.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sat Mar 28 20:21:33 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Tue Mar 31 19:29:18 2020
 <BR><P>
 <H3>Maximum Stack Usage =        136 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -583,9 +583,9 @@ Global Symbols
 
 <P><STRONG><a name="[ae]"></a>__scatterload_null</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __scatter.o(!!!scatter), UNUSED)
 
-<P><STRONG><a name="[af]"></a>__decompress</STRONG> (Thumb, 100 bytes, Stack size unknown bytes, __dclz77c.o(!!dclz77c), UNUSED)
+<P><STRONG><a name="[af]"></a>__decompress</STRONG> (Thumb, 90 bytes, Stack size unknown bytes, __dczerorl2.o(!!dczerorl2), UNUSED)
 
-<P><STRONG><a name="[b0]"></a>__decompress2</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __dclz77c.o(!!dclz77c), UNUSED)
+<P><STRONG><a name="[b0]"></a>__decompress1</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __dczerorl2.o(!!dczerorl2), UNUSED)
 
 <P><STRONG><a name="[b1]"></a>__scatterload_zeroinit</STRONG> (Thumb, 28 bytes, Stack size unknown bytes, __scatter_zi.o(!!handler_zi), UNUSED)
 
@@ -908,12 +908,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[20]"></a>Timer0A_Handler</STRONG> (Thumb, 96 bytes, Stack size 8 bytes, music.o(i.Timer0A_Handler))
+<P><STRONG><a name="[20]"></a>Timer0A_Handler</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, music.o(i.Timer0A_Handler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24 + Unknown Stack Size
 <LI>Call Chain = Timer0A_Handler &rArr; Sound_Play
 </UL>
-<BR>[Calls]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;disableTimer
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sound_Play
+<BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Sound_Play
 </UL>
 <BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Song_Play
 </UL>
@@ -950,11 +949,10 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[98]"></a>disableTimer</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, music.o(i.disableTimer))
-<BR><BR>[Called By]<UL><LI><a href="#[20]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer0A_Handler
-<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Song_Stop
+<BR><BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Song_Stop
 </UL>
 
-<P><STRONG><a name="[89]"></a>main</STRONG> (Thumb, 312 bytes, Stack size 0 bytes, lab6.o(i.main))
+<P><STRONG><a name="[89]"></a>main</STRONG> (Thumb, 356 bytes, Stack size 0 bytes, lab6.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32 + Unknown Stack Size
 <LI>Call Chain = main &rArr; Song_Play &rArr; Timer0A_Handler &rArr; Sound_Play
 </UL>

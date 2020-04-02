@@ -31,7 +31,7 @@ void Sound_Init(void);
 //           Minimum period to be determined by YOU
 //         if period equals zero, disable sound output
 // Output: none
-void Sound_Play(uint32_t period, unsigned short *voice);
+void Sound_Play(uint32_t period, const unsigned short *voice);
 
 //const unsigned short wave[32];
 //const unsigned short Trumpet[32];
